@@ -1,0 +1,89 @@
+@import 'reset.scss';
+
+* {
+  -webkit-tap-highlight-color: rgba(
+    0,
+    0,
+    0,
+    0
+  ); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+html {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  -webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
+  -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
+  -webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
+  background-color: #fff3f3;
+  font-size: 14px;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  color: #909090;
+}
+
+.c-main-header {
+  background-color: #00bfff;
+  padding: 1.5em 1em;
+  color: #ffffff;
+}
+.c-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.c-main-navigation {
+  background-color: #00bfff;
+  display: flex;
+}
+
+.c-main-navigation .o-list {
+  width: 100%;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  // justify-content: space-;
+}
+
+.o-list__item {
+  display: block;
+  padding: 1em;
+  position: relative;
+}
+
+.c-nav-link {
+  display: block;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.c-nav-link.active:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  border-bottom: solid 2px white;
+}
+
+.o-container {
+  display: flex;
+  padding: 1em;
+}
+
+/* Portrait layout (default) */
+
+/* Landscape layout (with min-width) */
+@media screen and (min-aspect-ratio: 1/1) and (min-width: 400px) {
+}

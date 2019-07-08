@@ -1,13 +1,8 @@
-import React from "react";
-import {
-  Router,
-  Route,
-  IndexRoute,
-  browserHistory
-} from "react-router";
-
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { Route, Switch } from 'react-router'; // react-router v4/v5
 import { Provider } from 'react-redux';
-import { syncHistoryWithStore } from 'react-router-redux';
+import { ConnectedRouter } from 'connected-react-router';
 
 import Layout from '../layout';
 import Dashboard from '../pages/dashboard';
@@ -15,19 +10,19 @@ import Example from '../pages/example';
 
 import { EXAMPLE_PAGE } from '../constants/routes';
 
-export default (store) => {
-  const history = syncHistoryWithStore(browserHistory, store);
-
-  return(
-    <Provider store={store}>
-      <Router history={history}>
-        <Route component={ Layout }>
-          <IndexRoute component={ Dashboard } />
-          <Route name="Dashboard" path="/" component={ Dashboard }  />
-
-          <Route name="Example" path={EXAMPLE_PAGE} component={ Example }  />
-        </Route>
-      </Router>
-    </Provider>
+export default (store, history) => {
+  return (
+    <BrowserRouter>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <Layout>
+            <Switch>
+              <Route exact path="/" component={Dashboard} />
+              <Route path={EXAMPLE_PAGE} component={Example} />
+            </Switch>
+          </Layout>
+        </ConnectedRouter>
+      </Provider>
+    </BrowserRouter>
   );
-}
+};
