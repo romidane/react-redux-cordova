@@ -1,56 +1,64 @@
-var path = require('path');
-var webpack = require("webpack");
+const path = require('path');
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = {
+const isProd = process.env.NODE_ENV === 'production';
+
+const config = {
   context: __dirname + '/app',
-  entry: [
-    'webpack-hot-middleware/client?http://localhost:8080/',
-    './application.js'
-  ],
+  entry: ['./application.js'],
   output: {
     path: __dirname + '/www/',
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'babel',
-        query: {
-          presets: ['stage-0','es2015', 'react']
-        }
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+            plugins: ['@babel/plugin-transform-runtime'],
+          },
+        },
       },
       {
-        test: /\.json$/,
-        loader: "json-loader"
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
       },
       {
-        test   : /\.css$/,
-        loaders: ['style', 'css', 'resolve-url']
-      },
-      {
-        test   : /\.scss$/,
-        loaders: ['style', 'css', 'less', 'resolve-url', 'sass?sourceMap']
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
       },
       {
         test: /\.(png|jpg|jpeg|gif|otf|svg|woff|woff2|eot|ttf)$/,
-        loader: 'url-loader?limit=10000'
-      }
-    ]
+        use: ['file-loader'],
+      },
+    ],
   },
-  postcss: function (webpack) {
-    return [
-        autoprefixer,
-        precss,
-        postcssImport({
-          addDependencyTo: webpack
-        })
-    ];
+  devServer: {
+    contentBase: path.join(__dirname, 'www'),
+    compress: true,
+    port: 9000,
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.NoErrorsPlugin()
-  ]
+    new MiniCssExtractPlugin({
+      filename: 'style.css',
+    }),
+  ],
 };
+
+if (!isProd) {
+  config.entry.concat('webpack-hot-middleware/client?http://localhost:9000/');
+  config.plugins.concat(new webpack.HotModuleReplacementPlugin());
+}
+
+module.exports = config;
