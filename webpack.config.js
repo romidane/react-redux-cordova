@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const isProd = process.env.NODE_ENV === 'production';
 
 const config = {
+  mode: isProd ? 'production' : 'development',
   context: __dirname + '/app',
   entry: ['./application.js'],
   output: {
