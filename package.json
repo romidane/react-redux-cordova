@@ -45,7 +45,7 @@
     "http-server": "^0.12.3",
     "mini-css-extract-plugin": "^0.7.0",
     "node-sass": "^5.0.0",
-    "postcss": "^8.2.4",
+    "postcss": "^8.2.10",
     "postcss-import": "^14.0.0",
     "postcss-loader": "^4.1.0",
     "postcss-preset-env": "^6.7.0",
